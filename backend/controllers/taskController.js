@@ -23,9 +23,9 @@ const getTasks = async (req, res) => {
 // Get a single task
 const getTask = async (req, res) => {
     try {
-        const {id} = req.params;
+        const { id } = req.params;
         const task = await Task.findById(id);
-        if(!task){
+        if (!task) {
             res.status(404).json({ message: `Task not found for this id: ${id}` });
         } else {
             res.status(200).json(task);
@@ -35,8 +35,24 @@ const getTask = async (req, res) => {
     }
 };
 
+// Delete a task
+const deleteTask = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const task = await Task.findByIdAndDelete(id);
+        if (!task) {
+            res.status(404).json({ message: `Task not found for this id: ${id}` });
+        } else {
+            res.status(200).json(task);
+        }
+    } catch (error) {
+        res.status(500).json({ msg: error.message });
+    }
+}
+
 module.exports = {
     createTask,
     getTasks,
-    getTask
+    getTask,
+    deleteTask,
 };
