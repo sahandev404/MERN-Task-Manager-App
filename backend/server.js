@@ -1,6 +1,7 @@
 const express = require("express");
 const dotenv = require("dotenv").config();
 const mongoose = require("mongoose");
+const Task = require("./model/taskModel");
 
 const app = express();
 
@@ -19,8 +20,12 @@ app.get("/", (req, res) => {
     res.send("Hello World");
 });
 app.post("/api/tasks", async (req, res) => {
-    console.log(req.body);
-    res.send("Task Created");
+    try {
+        const task = await Task.create(req.body);
+        res.status(201).json(task);
+    } catch (error) {
+        res.status(500).jason({ message: error.message });
+    }
 });
 
 // Connect to MongoDB
