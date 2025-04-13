@@ -2,12 +2,13 @@ const express = require("express");
 const dotenv = require("dotenv").config();
 const mongoose = require("mongoose");
 const Task = require("./model/taskModel");
+const taskRoutes = require("./routes/taskRoute");
 
 const app = express();
-
 //Middleware
 app.use(express.json()); // Parse JSON bodies
 app.use(express.urlencoded({ extended: false })); // Parse URL-encoded bodies
+app.use(taskRoutes);
 
 // Custom middleware example
 // const logger = (req, res, next) => {
@@ -18,22 +19,6 @@ app.use(express.urlencoded({ extended: false })); // Parse URL-encoded bodies
 //Routes
 app.get("/", (req, res) => {
     res.send("Hello World");
-});
-app.post("/api/tasks", async (req, res) => {
-    try {
-        const task = await Task.create(req.body);
-        res.status(201).json(task);
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-});
-app.get("/api/tasks", async (req, res) => {
-    try {
-        const tasks = await Task.find();
-        res.status(200).json(tasks);
-    } catch (error) {
-        res.status(500).json({ msg: error.message });
-    }
 });
 
 // Connect to MongoDB
