@@ -11,3 +11,20 @@ const connectDB = async ()=>{
 };
 
 module.exports = connectDB;
+
+
+//  USE THIS ON SERVER.JS
+
+// const connectDB = require("./config/connectDB");
+
+// const startServer = async ()=>{
+//     try{
+//         await connectDB();
+//         app.listen(PORT, () => {
+//             console.log(`server is running on port ${PORT}`);
+//         });
+//     }catch(error){
+//         console.error(error);
+//     }
+// }
+// startServer();
