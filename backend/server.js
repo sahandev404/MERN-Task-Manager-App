@@ -1,7 +1,7 @@
 const express = require("express");
 const dotenv = require("dotenv").config();
 const mongoose = require("mongoose");
-const Task = require("./model/taskModel");
+const Task = require("./models/taskModel");
 const taskRoutes = require("./routes/taskRoute");
 
 const app = express();
