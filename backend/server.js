@@ -6,6 +6,9 @@ const app = express();
 
 //Middleware
 app.use(express.json()); // Parse JSON bodies
+app.use(express.urlencoded({ extended: false })); // Parse URL-encoded bodies
+
+// Custom middleware example
 // const logger = (req, res, next) => {
 //     console.log(`${req.method} ${req.url}`);
 //     next();
