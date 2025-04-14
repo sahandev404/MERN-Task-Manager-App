@@ -9,7 +9,9 @@ const app = express();
 //Middleware
 app.use(express.json()); // Parse JSON bodies
 app.use(express.urlencoded({ extended: false })); // Parse URL-encoded bodies
-app.use(cors());
+app.use(cors({
+    origin: ["http://localhost:3000"]
+}));
 
 app.use("/api/tasks", taskRoutes);
 
