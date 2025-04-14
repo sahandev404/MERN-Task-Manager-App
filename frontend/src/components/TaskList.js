@@ -7,18 +7,18 @@ import { URL } from "../App";
 import loadingImg from "../assets/loader.gif";
 
 const TaskList = () => {
-    
+
     const [tasks, setTasks] = useState([]);
     const [completedTasks, setCompletedTasks] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
 
     const [formData, setFormData] = useState({
-            name: "",
-            completed: false,
-        });
+        name: "",
+        completed: false,
+    });
 
     const { name } = formData;
-    
+
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
@@ -27,8 +27,8 @@ const TaskList = () => {
     const getTasks = async () => {
         setIsLoading(true);
         try {
-            const {data} = await axios.get(`${URL}/api/tasks`)
-            setTasks(data);            
+            const { data } = await axios.get(`${URL}/api/tasks`)
+            setTasks(data);
         } catch (error) {
             toast.error("Failed to fetch tasks.");
             console.log(error);
@@ -37,9 +37,9 @@ const TaskList = () => {
     };
 
     useEffect(() => {
-      getTasks();
+        getTasks();
     }, [])
-    
+
 
     const createTask = async (e) => {
         e.preventDefault();
@@ -70,21 +70,21 @@ const TaskList = () => {
             </div>
             <hr />
             {isLoading && (
-                    <div className="--flex-center">
-                        <img src={loadingImg} alt="Loading..." />
-                    </div>
-                )}
+                <div className="--flex-center">
+                    <img src={loadingImg} alt="Loading..." />
+                </div>
+            )}
             {
                 !isLoading && tasks.length === 0 ? (
                     <p className="--py">No tasks found!</p>
-                
+
                 ) : (
                     <>
-                    {tasks.map((task,index) =>{
-                        return (
-                            <Task />
-                        )
-                    })}
+                        {tasks.map((task, index) => {
+                            return (
+                                <Task key={task.id} task={task} index={index} />
+                            )
+                        })}
                     </>
                 )
             }
