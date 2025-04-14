@@ -10,7 +10,9 @@ function App() {
       <div className="task-container">
         <TaskList />
       </div>
-      <ToastContainer />
+      <div>
+        <ToastContainer />
+      </div>
     </div>
   );
 }
