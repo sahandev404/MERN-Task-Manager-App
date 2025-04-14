@@ -11,6 +11,8 @@ const TaskList = () => {
     const [tasks, setTasks] = useState([]);
     const [completedTasks, setCompletedTasks] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
+    const [isEditing, setIsEditing] = useState(false);
+    const [taskId, setTaskId] = useState("");
 
     const [formData, setFormData] = useState({
         name: "",
@@ -66,10 +68,26 @@ const TaskList = () => {
         }
     }
 
+    const getSingleTask = async (task) => {
+        setFormData({ name: task.name, completed: false });
+        setTaskId(task._id);
+        setIsEditing(true);
+    }
+
+    const updateTask = async () => {
+
+    }
+
     return (
         <div>
             <h2>Task Manager</h2>
-            <TaskForm name={name} handleInputChange={handleInputChange} createTask={createTask} />
+            <TaskForm 
+                name={name} 
+                handleInputChange={handleInputChange} 
+                createTask={createTask} 
+                isEditing={isEditing} 
+                updateTask={updateTask}
+            />
             <div className="--flex-between --pb">
                 <p>
                     <b>Total Tasks: </b> 0
@@ -92,7 +110,13 @@ const TaskList = () => {
                     <>
                         {tasks.map((task, index) => {
                             return (
-                                <Task key={task.id} task={task} index={index} deleteTask={deleteTask} />
+                                <Task 
+                                    key={task.id} 
+                                    task={task} 
+                                    index={index} 
+                                    deleteTask={deleteTask}
+                                    getSingleTask={getSingleTask} 
+                                />
                             )
                         })}
                     </>
