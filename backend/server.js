@@ -3,11 +3,14 @@ const dotenv = require("dotenv").config();
 const mongoose = require("mongoose");
 const Task = require("./models/taskModel");
 const taskRoutes = require("./routes/taskRoute");
+const cors = require("cors");
 
 const app = express();
 //Middleware
 app.use(express.json()); // Parse JSON bodies
 app.use(express.urlencoded({ extended: false })); // Parse URL-encoded bodies
+app.use(cors());
+
 app.use("/api/tasks", taskRoutes);
 
 // Custom middleware example
