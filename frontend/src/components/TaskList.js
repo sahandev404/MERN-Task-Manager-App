@@ -74,9 +74,36 @@ const TaskList = () => {
         setIsEditing(true);
     }
 
-    const updateTask = async () => {
-
+    const updateTask = async (e) => {
+        e.preventDefault();
+        if (name === "") {
+            return toast.error("Input field cannot be empty!");
+        }
+        try {
+            await axios.put(`${URL}/api/tasks/${taskId}`, formData);
+            setFormData({ ...formData, name: "" });
+            toast.success("Task updated successfully!");
+            setIsEditing(false);
+            getTasks();
+        } catch (error) {
+            toast.error(error.message);
+            console.log(error);
+        }
     }
+
+    const setToComplete = async (task) => {
+        const newFormData ={
+            name: task.name,
+            completed: true,
+        }
+        try {
+            await axios.put(`${URL}/api/tasks/${task._id}`, newFormData)
+            getTasks();
+        } catch (error) {
+            toast.error(error.message);
+            console.log(error);
+        }
+    };
 
     return (
         <div>
@@ -115,7 +142,8 @@ const TaskList = () => {
                                     task={task} 
                                     index={index} 
                                     deleteTask={deleteTask}
-                                    getSingleTask={getSingleTask} 
+                                    getSingleTask={getSingleTask}
+                                    setToComplete={setToComplete} 
                                 />
                             )
                         })}
