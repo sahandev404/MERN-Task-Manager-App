@@ -1,30 +1,42 @@
 const express = require("express");
 const dotenv = require("dotenv").config();
 const mongoose = require("mongoose");
-const Task = require("./models/taskModel");
 const taskRoutes = require("./routes/taskRoute");
 const cors = require("cors");
+const path = require("path");
 
 const app = express();
 //Middleware
 app.use(express.json()); // Parse JSON bodies
 app.use(express.urlencoded({ extended: false })); // Parse URL-encoded bodies
 app.use(cors({
-    origin: ["http://localhost:3000"]
+    origin: ["http://localhost:3000",""]
 }));
 
 app.use("/api/tasks", taskRoutes);
+
+//Deployment Code
+if (process.env.NODE_ENV === "production") {
+    // Serve static files from the React frontend app
+    app.use(express.static(path.join(__dirname, "../frontend/build")));
+
+    app.get("*", (req, res) => {
+        res.sendFile(path.join(__dirname, "../", "frontend", "build", "index.html"));
+    });
+
+} else {
+    // Development Code
+    app.get("/", (req, res) => {
+        res.send("API is running...");
+    });
+
+}
 
 // Custom middleware example
 // const logger = (req, res, next) => {
 //     console.log(`${req.method} ${req.url}`);
 //     next();
 // }
-
-//Routes
-app.get("/", (req, res) => {
-    res.send("Hello World");
-});
 
 // Connect to MongoDB
 const PORT = process.env.PORT || 5000;
