@@ -17,20 +17,16 @@ The MERN Task Manager App is a full-stack web application built using the MERN s
 ## Setup Instructions
 
 ### Backend Setup
-1. Navigate to the `backend` directory:
-   ```bash
-   cd backend
-   ```
-2. Install dependencies:
+1. Install dependencies:
    ```bash
    npm install
    ```
-3. Create a `.env` file in the `backend` directory and add the following environment variables:
+2. Create a `.env` file in the `backend` directory and add the following environment variables:
    ```env
    MONGO_URI=your_mongodb_connection_string
    PORT=5000
    ```
-4. Start the backend server:
+3. Start the backend server:
    ```bash
    npm start
    ```
