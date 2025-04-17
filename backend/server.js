@@ -13,7 +13,7 @@ app.use(cors({
     origin: ["http://localhost:3000","https://mern-task-manager-frontend-pi.vercel.app/"]
 }));
 
-app.use("/api/tasks", taskRoutes);
+app.use("/api", taskRoutes);
 
 //Deployment Code
 if (process.env.NODE_ENV === "production") {

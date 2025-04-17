@@ -5,10 +5,10 @@ const { createTask, getTasks, getTask, deleteTask, updateTask } = require("../co
 
 // Create a task
 
-router.route("/")
+router.route("/tasks/")
     .post(createTask)
     .get(getTasks);
-router.route("/:id")
+router.route("/tasks/:id")
     .get(getTask)
     .delete(deleteTask)
     .put(updateTask);
