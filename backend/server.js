@@ -10,7 +10,7 @@ const app = express();
 app.use(express.json()); // Parse JSON bodies
 app.use(express.urlencoded({ extended: false })); // Parse URL-encoded bodies
 app.use(cors({
-    origin: ["http://localhost:3000",""]
+    origin: ["http://localhost:3000","https://mern-task-manager-frontend-pi.vercel.app/"]
 }));
 
 app.use("/api/tasks", taskRoutes);
