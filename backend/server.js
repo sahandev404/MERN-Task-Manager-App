@@ -15,6 +15,9 @@ app.use("/api/tasks", taskRoutes);
 
 //Deployment Code
 if (process.env.NODE_ENV === "production") {
+    app.get("/", (req, res) => {
+        res.send("API is running...");
+    });
     // Serve static files from the React frontend app
     app.use(express.static(path.join(__dirname, "../frontend/build")));
 
