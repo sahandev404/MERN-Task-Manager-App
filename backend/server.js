@@ -10,7 +10,7 @@ const app = express();
 //Middleware
 app.use(express.json()); // Parse JSON bodies
 app.use(express.urlencoded({ extended: false })); // Parse URL-encoded bodies
-app.use(cors("https://mern-task-manager-frontend-pi.vercel.app/"));
+app.use(cors(["https://mern-task-manager-frontend-pi.vercel.app/", "http://localhost:3000/"])); // Updated CORS settings
 
 app.use("/api/tasks", taskRoutes);
 app.use("/api/users", userRoutes);
