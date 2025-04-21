@@ -2,6 +2,7 @@ const express = require("express");
 const dotenv = require("dotenv").config();
 const mongoose = require("mongoose");
 const taskRoutes = require("./routes/taskRoute");
+const userRoutes = require("./routes/userRoute");
 const cors = require("cors");
 const path = require("path");
 
@@ -12,6 +13,7 @@ app.use(express.urlencoded({ extended: false })); // Parse URL-encoded bodies
 app.use(cors("https://mern-task-manager-frontend-pi.vercel.app/"));
 
 app.use("/api/tasks", taskRoutes);
+app.use("/api/users", userRoutes);
 
 //Deployment Code
 if (process.env.NODE_ENV === "production") {
