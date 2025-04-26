@@ -1,11 +1,15 @@
 const Task = require("../models/taskModel");
+const User = require("../models/userModel");
 
 // @desc Create a task
 // @route POST /api/tasks
 // @access Private
 const createTask = async (req, res) => {
     try {
-        const task = await Task.create(req.body);
+        const task = await Task.create({
+            name : req.body.name,
+            user: req.user.id
+        });
         res.status(201).json(task);
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -17,7 +21,7 @@ const createTask = async (req, res) => {
 // @access Private
 const getTasks = async (req, res) => {
     try {
-        const tasks = await Task.find();
+        const tasks = await Task.find({ user: req.user.id });
         res.status(200).json(tasks);
     } catch (error) {
         res.status(500).json({ msg: error.message });
