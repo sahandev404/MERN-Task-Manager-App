@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { URL } from '../App';
+import LoginForm from '../components/LoginForm';
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -13,7 +15,7 @@ const Login = () => {
         setError('');
 
         try {
-            const response = await axios.post('/api/auth/login', { email, password });
+            const response = await axios.post(`${URL}/api/users/login`, { email, password });
             localStorage.setItem('token', response.data.token);
             navigate('/dashboard');
         } catch (err) {
@@ -22,32 +24,20 @@ const Login = () => {
     };
 
     return (
+        <div className="app">
         <div className="login-container">
-            <h2>Login</h2>
-            <form onSubmit={handleSubmit}>
-                <div className="form-group">
-                    <label htmlFor="email">Email:</label>
-                    <input
-                        type="email"
-                        id="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        required
-                    />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="password">Password:</label>
-                    <input
-                        type="password"
-                        id="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        required
-                    />
-                </div>
-                {error && <p className="error">{error}</p>}
-                <button type="submit">Login</button>
-            </form>
+            <h2 className="--flex-center">Login</h2>
+            <LoginForm
+                email={email}
+                password={password}
+                setEmail={setEmail}
+                setPassword={setPassword}
+                error={error}
+                handleSubmit={handleSubmit}
+            />
+            <hr />
+            <p className="--flex-center">Don't have an account? <a href="/register"><b>&nbsp; Register here</b></a></p>
+        </div>
         </div>
     );
 };
