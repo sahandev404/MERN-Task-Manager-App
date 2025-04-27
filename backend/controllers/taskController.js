@@ -7,7 +7,7 @@ const User = require("../models/userModel");
 const createTask = async (req, res) => {
     try {
         const task = await Task.create({
-            name : req.body.name,
+            name: req.body.name,
             user: req.user.id
         });
         res.status(201).json(task);
@@ -51,32 +51,20 @@ const getTask = async (req, res) => {
 const deleteTask = async (req, res) => {
     try {
         const { id } = req.params;
+        const task = await Task.findById(id);
 
-
-
-
-        // Check if the user exists
-        const user = await User.findById(req.user.id);
-        if (!user) {
-            res.status(404);
-            throw new Error('User not found');
-        }
-
-        // Make sure the logged in user matches the task user
-        if(task.user.toString() !== req.user.id) {
-            res.status(401);
-            throw new Error('Not authorized to update this task');
-        }
-
-
-
-
-        const task = await Task.findByIdAndDelete(id);
+        // Check if the task exists
         if (!task) {
-            res.status(404).json({ message: `Task not found for this id: ${id}` });
-        } else {
-            res.status(200).json(task);
+            return res.status(404).json({ message: `Task not found for this id: ${id}` });
         }
+        // Make sure the logged in user matches the task user
+        if (task.user.toString() !== req.user.id) {
+            return res.status(401).json({ message: 'Not authorized to update this task' });
+        }
+
+        await Task.findByIdAndDelete(id);
+        return res.status(200).json({ message: 'Task deleted successfully' });
+
     } catch (error) {
         res.status(500).json({ msg: error.message });
     }
@@ -88,27 +76,19 @@ const deleteTask = async (req, res) => {
 const updateTask = async (req, res) => {
     try {
         const { id } = req.params;
+        const task = await Task.findById(id);
 
-
-
-
-        // Check if the user exists
-        const user = await User.findById(req.user.id);
-        if (!user) {
-            res.status(404);
-            throw new Error('User not found');
+        // Check if the task exists
+        if (!task) {
+            return res.status(404).json({ message: `Task not found for this id: ${id}` });
         }
-
         // Make sure the logged in user matches the task user
-        if(task.user.toString() !== req.user.id) {
-            res.status(401);
-            throw new Error('Not authorized to update this task');
+        if (task.user.toString() !== req.user.id) {
+            return res.status(401).json({ message: 'Not authorized to update this task' });
         }
-        
 
-
-        
-        const task = await Task.findByIdAndUpdate(
+        // Update the task
+        const updatedTask = await Task.findByIdAndUpdate(
             { _id: id },
             req.body,
             {
@@ -116,12 +96,7 @@ const updateTask = async (req, res) => {
                 runValidators: true
             }
         );
-        // Check if the task exists
-        if (!task) {
-            return res.status(404).json({ message: `Task not found for this id: ${id}` });
-        } else {
-            res.status(200).json(task);
-        }
+        res.status(200).json(updatedTask);
     } catch (error) {
         res.status(500).json({ msg: error.message });
     }
