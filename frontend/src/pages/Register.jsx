@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import RegisterForm from '../components/RegisterForm';
 
 const Register = () => {
     const [formData, setFormData] = useState({
@@ -22,44 +23,20 @@ const Register = () => {
     };
 
     return (
-        <div className="register-page">
-            <h2>Register</h2>
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label htmlFor="name">Name:</label>
-                    <input
-                        type="text"
-                        id="name"
-                        name="name"
-                        value={formData.name}
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
-                <div>
-                    <label htmlFor="email">Email:</label>
-                    <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        value={formData.email}
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
-                <div>
-                    <label htmlFor="password">Password:</label>
-                    <input
-                        type="password"
-                        id="password"
-                        name="password"
-                        value={formData.password}
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
-                <button type="submit">Register</button>
-            </form>
+        <div className="app">
+        <div className="login-container">
+            <h2 className="--flex-center">Register</h2>
+            <RegisterForm
+                email={formData.email}
+                password={formData.password}
+                setEmail={(email) => setFormData({ ...formData, email })}
+                setPassword={(password) => setFormData({ ...formData, password })}
+                error={null}
+                handleSubmit={handleSubmit}
+            />
+            <hr />
+            <p className="--flex-center">Already have an account? <a href="/login"><b>&nbsp; Login here</b></a></p>
+        </div>
         </div>
     );
 };

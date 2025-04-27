@@ -1,4 +1,4 @@
-const RegisterForm = ({ email, password, setEmail, setPassword, error, handleSubmit }) => {
+const RegisterForm = ({ user, email, password, setEmail, setPassword, setUser, error, handleSubmit }) => {
     return (
         <form className="login-form" onSubmit={handleSubmit}>
             <div className="login-field">
