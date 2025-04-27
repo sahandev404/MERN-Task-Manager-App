@@ -1,19 +1,23 @@
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import TaskList from "./components/TaskList"
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Dashboard from './pages/Dashboard';
+import Login from './pages/Login';
+import Register from './pages/Register';
 
-export const URL = process.env.REACT_APP_SERVER_URL;
+export const URL = process.env.REACT_APP_SERVER_URL || 'http://localhost:5000';
 
 function App() {
   return (
-    <div className="app">
-      <div className="task-container">
-        <TaskList />
-      </div>
-      <div>
-        <ToastContainer />
-      </div>
-    </div>
+    <>
+      <Router>
+        <div className="app-container">
+          <Routes>
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/" element={<Dashboard />} />
+          </Routes>
+        </div>
+      </Router>
+    </>
   );
 }
 
