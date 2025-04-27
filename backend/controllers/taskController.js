@@ -51,6 +51,26 @@ const getTask = async (req, res) => {
 const deleteTask = async (req, res) => {
     try {
         const { id } = req.params;
+
+
+
+
+        // Check if the user exists
+        const user = await User.findById(req.user.id);
+        if (!user) {
+            res.status(404);
+            throw new Error('User not found');
+        }
+
+        // Make sure the logged in user matches the task user
+        if(task.user.toString() !== req.user.id) {
+            res.status(401);
+            throw new Error('Not authorized to update this task');
+        }
+
+
+
+
         const task = await Task.findByIdAndDelete(id);
         if (!task) {
             res.status(404).json({ message: `Task not found for this id: ${id}` });
@@ -68,6 +88,26 @@ const deleteTask = async (req, res) => {
 const updateTask = async (req, res) => {
     try {
         const { id } = req.params;
+
+
+
+
+        // Check if the user exists
+        const user = await User.findById(req.user.id);
+        if (!user) {
+            res.status(404);
+            throw new Error('User not found');
+        }
+
+        // Make sure the logged in user matches the task user
+        if(task.user.toString() !== req.user.id) {
+            res.status(401);
+            throw new Error('Not authorized to update this task');
+        }
+        
+
+
+        
         const task = await Task.findByIdAndUpdate(
             { _id: id },
             req.body,
@@ -76,6 +116,7 @@ const updateTask = async (req, res) => {
                 runValidators: true
             }
         );
+        // Check if the task exists
         if (!task) {
             return res.status(404).json({ message: `Task not found for this id: ${id}` });
         } else {
